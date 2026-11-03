@@ -1,0 +1,46 @@
+{# Aperçu statique des résultats, avec les classes du vrai tableau : l'accueil montre l'outil tel qu'il est. #}
+{% set rows = [
+    {path: '/', title: 'home.preview.rows.home', status: 200, depth: 0, headers: ['csp_missing', 'is-warn'], cookies: ['ok', 'is-good'], secrets: ['none', ''], score: 72, issues: {high: 2, medium: 1}},
+    {path: '/connexion', title: 'home.preview.rows.login', status: 200, depth: 1, headers: ['ok', 'is-good'], cookies: ['no_secure', 'is-bad'], secrets: ['none', ''], score: 45, issues: {critical: 1, high: 2}},
+    {path: '/paiement', title: 'home.preview.rows.app', status: 200, depth: 1, headers: ['ok', 'is-good'], cookies: ['none', ''], secrets: ['stripe', 'is-bad'], score: 25, issues: {critical: 1, medium: 1}},
+    {path: '/contact', title: 'home.preview.rows.contact', status: 200, depth: 1, headers: ['ok', 'is-good'], cookies: ['ok', 'is-good'], secrets: ['none', ''], score: 90, issues: {low: 1}},
+] %}
+
+<div class="preview" aria-hidden="true">
+    <div class="preview-bar"><span></span><span></span><span></span><b>{{ 'crawl.title'|trans({'%host%': 'www.example.com'}) }}</b></div>
+    <div class="preview-body">
+        <dl class="stats">
+            <div class="stat is-score is-warn"><dt>{{ 'home.preview.stats.score'|trans }}</dt><dd>68<small>/100</small></dd></div>
+            <div class="stat"><dt>{{ 'home.preview.stats.pages'|trans }}</dt><dd>48</dd></div>
+            <div class="stat is-error"><dt>{{ 'home.preview.stats.critical'|trans }}</dt><dd>2</dd></div>
+            <div class="stat"><dt>{{ 'home.preview.stats.high'|trans }}</dt><dd>5</dd></div>
+        </dl>
+        <div class="table-wrap">
+            <table class="pages-table is-preview">
+                <thead>
+                    <tr>
+                        {% for key in ['url', 'status', 'depth', 'headers', 'cookies', 'secrets', 'score', 'issues'] %}
+                            <th data-key="{{ key }}"{% if key in ['depth', 'score'] %} class="is-number"{% endif %}><button type="button" tabindex="-1">{{ ('js.columns.' ~ key)|trans }}</button></th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in rows %}
+                        <tr data-url>
+                            <td data-key="url">
+                                <span class="page-toggle"><span class="chevron"></span><span class="page-text"><span class="page-path">{{ row.path }}</span><span class="page-sub">{{ row.title|trans }}</span></span></span>
+                            </td>
+                            <td data-key="status"><span class="status is-ok">{{ row.status }}</span></td>
+                            <td data-key="depth" class="is-number"><span class="metric">{{ row.depth }}</span></td>
+                            {% for key in ['headers', 'cookies', 'secrets'] %}
+                                <td data-key="{{ key }}"><span class="metric {{ row[key][1] }}">{{ ('home.preview.cells.' ~ row[key][0])|trans }}</span></td>
+                            {% endfor %}
+                            <td data-key="score" class="is-number"><span class="metric {{ row.score >= 80 ? 'is-good' : row.score >= 50 ? 'is-warn' : 'is-bad' }}">{{ row.score }}</span></td>
+                            <td data-key="issues"><span class="issue-counts">{% for severity, n in row.issues %}<span class="pill is-{{ severity }}">{{ n }}</span>{% endfor %}</span></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

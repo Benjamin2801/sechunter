@@ -1,0 +1,46 @@
+# yaml-language-server: $schema=../vendor/symfony/dependency-injection/Loader/schema/services.schema.json
+
+parameters:
+    # Exigence de route pour {_locale}, à garder alignée avec framework.enabled_locales.
+    app.locales: 'fr|en'
+
+    # Pages analysées au plus par crawl sans compte (quota V1).
+    app.crawl.max_pages: 50
+    # Pages analysées par requête de lot : le navigateur enchaîne les lots (durée < 30 s).
+    app.crawl.batch_size: 4
+    # Identifiable, et proche d'un navigateur pour recevoir les mêmes en-têtes qu'un visiteur.
+    app.crawl.user_agent: 'Mozilla/5.0 (compatible; SecHunter/1.0; +https://net-labs.fr/sechunter) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36'
+
+    # Éditeur affiché dans les mentions légales.
+    app.legal:
+        name: '%env(LEGAL_PUBLISHER)%'
+        address: '%env(LEGAL_ADDRESS)%'
+        siren: '%env(LEGAL_SIREN)%'
+        contact: '%env(LEGAL_CONTACT)%'
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        bind:
+            array $enabledLocales: '%kernel.enabled_locales%'
+            int $maxPages: '%app.crawl.max_pages%'
+            int $batchSize: '%app.crawl.batch_size%'
+
+    App\:
+        resource: '../src/'
+
+    # Protection SSRF : aucune requête ne doit atteindre le réseau privé du serveur
+    # (127.0.0.1, 10.x, 192.168.x, 169.254.x...).
+    app.crawl.http_client:
+        class: Symfony\Component\HttpClient\NoPrivateNetworkHttpClient
+        arguments: ['@http_client']
+    Symfony\Contracts\HttpClient\HttpClientInterface $siteClient: '@app.crawl.http_client'
+
+when@test:
+    services:
+        app.crawl.http_client:
+            alias: http_client
+
+        App\Tests\Http\FakeSite:
+            public: true

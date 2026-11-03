@@ -1,0 +1,15 @@
+{% if step == 'type' %}
+    <span class="shot-input">www.example.com<span class="shot-caret"></span></span>
+{% elseif step == 'crawl' %}
+    <span class="shot-progress"><span style="width: 62%"></span></span>
+    <span class="shot-mono">31 / 50</span>
+{% elseif step == 'measure' %}
+    <span class="shot-mono"><span class="metric is-good">HSTS ✓</span> · <span class="metric is-good">nosniff ✓</span></span>
+    <span class="shot-mono"><span class="metric is-bad">CSP ✗</span> · <span class="metric is-warn">Secure ✗</span></span>
+{% elseif step == 'diagnose' %}
+    <span class="issue-counts"><span class="pill is-critical">1</span><span class="pill is-high">3</span><span class="pill is-medium">4</span><span class="pill is-low">2</span></span>
+    <span class="shot-mono"><span class="dot is-critical"></span> {{ 'issue.secret_token_exposed'|trans }}</span>
+{% else %}
+    <span class="button-secondary is-small is-csv">{{ include('_partials/_icon.svg.twig', {name: 'download'}) }}{{ 'crawl.export_csv'|trans }}</span>
+    <span class="shot-mono">{{ 'home.method.export.columns'|trans }}</span>
+{% endif %}

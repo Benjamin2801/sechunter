@@ -1,0 +1,427 @@
+meta:
+    title: "SecHunter — Passive Web Security Scanner & Vulnerability Auditor"
+    description: "Audit your website security: HTTP headers (CSP, HSTS, X-Frame-Options), cookies (Secure, HttpOnly), JS secrets, forms, and mixed content."
+
+nav:
+    home: "home"
+    language: "Language"
+    theme: "Toggle between light and dark theme"
+
+footer:
+    tagline: "SecHunter — passive web security scanner built by Net Labs"
+
+form:
+    url_label: "Website address to audit"
+    url_placeholder: "example.com or https://my-site.com"
+    submit: "Audit security"
+    consent: "I certify that I am the owner of this site or have express permission for this passive audit."
+
+legal:
+    meta_title: "Legal Notice and Privacy"
+    meta_description: "Legal notice for SecHunter, passive web security tool by Net Labs."
+    title: "Legal notice"
+    publisher:
+        heading: "Publisher"
+        siren: "SIREN: %siren%"
+        contact: "Contact:"
+    host:
+        heading: "Host"
+        text: "OVH SAS<br>2 rue Kellermann, 59100 Roubaix, France<br>ovhcloud.com"
+    data:
+        heading: "Personal Data"
+        no_account: "SecHunter does not require an account in V1."
+        analytics: "Site traffic may be measured anonymously to improve service."
+        third_parties: "Target site pages are inspected passively by SecHunter; results remain exclusively in your browser."
+    ip:
+        heading: "Intellectual Property"
+        text: "Analyzed content belongs to their respective publishers; security assessments are indicative."
+
+crawl:
+    title: "Security audit: %host%"
+    sitemap: "%count% pages in sitemap"
+    limit: "limit of %max% pages"
+    export_csv: "Export CSV report"
+    noscript: "JavaScript is required to run the crawl and display the live audit."
+    error:
+        invalid: "The address entered is invalid."
+        robots: "The site's robots.txt forbids crawling (Disallow: /)."
+        network: "Unable to reach the site (timeout or connection error)."
+        status: "The server returned HTTP error %status%."
+        redirects: "Too many redirects to home page."
+
+home:
+    title: "Find your site's weak spots [before attackers do]."
+    lead: "HTTP headers, session cookies, forgotten API keys, mixed content, forms: SecHunter sifts through up to %max% pages in minutes, attacks nothing, and tells you what to fix."
+    facts:
+        pages: "Up to %max% pages per scan"
+        robots: "robots.txt strictly followed"
+        account: "No account or installation required"
+        live: "Live browser results"
+    preview:
+        kicker: "Overview"
+        title: "A score out of 100, then every flaw, page by page"
+        cta: "Start security audit now →"
+        rows:
+            home: "Home · HTTPS on, but no CSP or clickjacking protection"
+            login: "Login · form without CSRF token, cookie without Secure"
+            app: "Checkout · Stripe key in /assets/app.js, public sourcemap"
+            contact: "Contact · a _blank link without rel=noopener"
+        stats:
+            score: "Security score"
+            pages: "Pages audited"
+            critical: "Critical flaws"
+            high: "High flaws"
+        cells:
+            ok: "OK"
+            none: "—"
+            csp_missing: "No CSP"
+            no_secure: "No Secure"
+            stripe: "Stripe key"
+    method:
+        kicker: "The Method"
+        title: "From address to fix, in five steps"
+        type:
+            title: "Enter"
+            text: "Your website address, with or without https:// protocol."
+            output: "An address"
+        crawl:
+            title: "Explore"
+            text: "Your browser follows internal links, batch by batch, respecting robots.txt."
+            output: "Up to %max% pages"
+        measure:
+            title: "Analyze"
+            text: "Every response is read passively: security headers, HTTPS and cookie attributes."
+            output: "Headers & Cookies"
+        diagnose:
+            title: "Detect"
+            text: "API keys in the code, mixed content, exposed forms: everything ranked by severity."
+            output: "Categorized flaws"
+        export:
+            title: "Fix"
+            text: "Each flaw explains the risk and gives the configuration line to add."
+            output: "Fixes & CSV"
+            columns: "Full report, ready to share"
+    measures:
+        kicker: "Checks"
+        title: "22 checks on every page"
+        headers:
+            title: "HTTP Headers"
+            1: "Content-Security-Policy (CSP) and permissive directives"
+            2: "Strict-Transport-Security (HSTS) and max-age duration"
+            3: "Anti-Clickjacking protection (X-Frame-Options / frame-ancestors)"
+            4: "MIME-sniffing protection (X-Content-Type-Options: nosniff)"
+            5: "Referrer and Permissions-Policy (camera, mic, location)"
+            6: "Server version leaks (Server, X-Powered-By)"
+        cookies:
+            title: "Cookies & Sessions"
+            1: "Secure flag: required transmission on encrypted HTTPS"
+            2: "HttpOnly flag: protection against session theft via XSS"
+            3: "SameSite attribute: protection against cross-site CSRF"
+            4: "SameSite=None rejected without the Secure attribute"
+            5: "CORS open to everyone (*) combined with cookies"
+            6: "Every cookie listed with its attributes in the page detail"
+        secrets:
+            title: "Secrets & DOM"
+            1: "API keys in the HTML and the site's .js files (AWS, Google, Stripe, GitHub, Slack, JWT, private keys)"
+            2: "JavaScript sourcemaps announced by the page or its scripts"
+            3: "Mixed content (unencrypted HTTP scripts, styles, iframes on HTTPS)"
+            4: "Insecure forms with password submitted over cleartext HTTP"
+            5: "External target=_blank links vulnerable to Reverse Tabnabbing"
+            6: "Sensitive HTML comments revealing IP addresses or TODOs"
+    thresholds:
+        kicker: "Standards"
+        heading: "Public thresholds, not a black box"
+        text: "Every check relies on an OWASP, ANSSI or RFC recommendation, and every alert comes with a fix you can apply right away."
+        measure: "Check"
+        limit: "Recommended standard"
+        source: "Framework"
+        csp:
+            name: "Content-Security-Policy"
+            limit: "Strict CSP without unsafe-inline"
+            source: "W3C CSP Level 3 / OWASP"
+        hsts:
+            name: "Strict-Transport-Security"
+            limit: "max-age ≥ 15,552,000 (6 months)"
+            source: "RFC 6797 / ANSSI"
+        xfo:
+            name: "Anti-Clickjacking"
+            limit: "DENY or SAMEORIGIN"
+            source: "RFC 7034"
+        xcto:
+            name: "MIME Sniffing"
+            limit: "nosniff required"
+            source: "Fetch Standard / OWASP"
+        cookies:
+            name: "Session cookies"
+            limit: "Secure; HttpOnly; SameSite=Lax"
+            source: "RFC 6265bis"
+        secrets:
+            name: "Secrets in the code"
+            limit: "No hardcoded private keys"
+            source: "OWASP Top 10 (A01/A02)"
+    foundations:
+        kicker: "The sources"
+        heading: "Foundational security references"
+        text: "SecHunter checks are grounded in widely recognized web security guidance and standards."
+        sources:
+            owasp_top10:
+                name: "OWASP Top 10"
+                text: "An overview of the leading web application security risks."
+                url: "https://owasp.org/www-project-top-ten/"
+            owasp_cheatsheets:
+                name: "OWASP Cheat Sheet Series"
+                text: "Practical advice for preventing application vulnerabilities."
+                url: "https://cheatsheetseries.owasp.org/"
+            anssi:
+                name: "ANSSI"
+                text: "Guides and security recommendations for information systems."
+                url: "https://cyber.gouv.fr/publications"
+            w3c:
+                name: "W3C — Content Security Policy"
+                text: "The specification for web content security policies."
+                url: "https://www.w3.org/TR/CSP3/"
+            ietf:
+                name: "IETF — Web security RFCs"
+                text: "HTTP, HSTS, cookies, and vulnerability disclosure standards."
+                url: "https://www.rfc-editor.org/"
+            whatwg:
+                name: "WHATWG — Fetch Standard"
+                text: "Standardized behavior for web requests and their headers."
+                url: "https://fetch.spec.whatwg.org/"
+    technologies:
+        heading: "Project technologies"
+        items:
+            php:
+                name: "PHP"
+            symfony:
+                name: "Symfony"
+            twig:
+                name: "Twig"
+            javascript:
+                name: "JavaScript"
+            phpunit:
+                name: "PHPUnit"
+            phpstan:
+                name: "PHPStan"
+            ovhcloud:
+                name: "OVHcloud"
+    inside:
+        kicker: "Under the hood"
+        title: "A passive audit, honest about what it sees"
+        passive:
+            title: "No attack, ever"
+            text: "SecHunter reads what any visitor receives: headers, cookies, HTML and scripts. No injection, no brute force, no needless load on your server."
+        browser:
+            title: "Your browser drives"
+            text: "It keeps the page queue and asks the server for batches of four. Nothing is stored: the report stays with you."
+        polite:
+            title: "Polite to the site"
+            text: "robots.txt is followed and the crawl slows down as soon as the server asks. No private network address can be reached."
+        honest:
+            title: "A first safety net, not a pentest"
+            text: "A passive audit catches the most common misconfigurations. It does not replace a penetration test, and says so."
+    cta:
+        title: "Does your site pass the test?"
+        text: "Up to %max% pages audited for free, no account, no install."
+        button: "Audit my site →"
+    discord:
+        kicker: "Community"
+        title: "Join Net Labs on Discord"
+        text: "Ask questions about your audits, discuss web security, and get updates about our tools."
+        button: "Join the Discord"
+
+issue:
+    secret_token_exposed: "Exposed API key or secret token"
+    insecure_form_action: "Sensitive form submitted in cleartext (HTTP)"
+    mixed_content: "Unencrypted mixed content (HTTP on HTTPS)"
+    csp_missing: "Missing Content-Security-Policy (CSP) header"
+    hsts_missing: "Missing Strict-Transport-Security (HSTS) header"
+    x_frame_missing: "Missing anti-Clickjacking protection (X-Frame-Options)"
+    cookie_no_secure: "Sensitive cookie missing Secure flag"
+    cookie_no_httponly: "Sensitive cookie missing HttpOnly flag"
+    cookie_samesite_missing: "Cookie missing appropriate SameSite attribute"
+    csp_unsafe_inline: "CSP contains 'unsafe-inline' directive"
+    csp_unsafe_eval: "CSP contains 'unsafe-eval' directive"
+    csp_wildcard: "CSP contains wildcard source (*)"
+    nosniff_missing: "Missing X-Content-Type-Options: nosniff header"
+    tabnabbing: "Target=_blank link vulnerable to Reverse Tabnabbing"
+    sourcemap_exposed: "JavaScript sourcemap (.js.map) publicly accessible"
+    hsts_short_max_age: "HSTS max-age too short (< 6 months)"
+    cors_wildcard: "Overly permissive CORS wildcard with credentials"
+    referrer_policy_missing: "Missing or unsafe Referrer-Policy header"
+    permissions_policy_missing: "Missing Permissions-Policy header"
+    server_header_leak: "Server version disclosure in response header"
+    form_no_csrf: "POST form without detectable CSRF token"
+    comment_leak: "Suspicious HTML comment leaking internal details"
+    http_error: "HTTP response error (status 4xx / 5xx)"
+    redirect: "HTTP redirect"
+    blocked: "Page excluded by robots.txt"
+
+help:
+    secret_token_exposed:
+        why: "API keys or access tokens were found in public JavaScript or HTML. Attackers can extract them to impersonate your accounts or incur unauthorized charges."
+        fix: "Store API keys in server-side environment variables (.env) and immediately revoke compromised keys."
+    insecure_form_action:
+        why: "This form submits credentials or data to an unencrypted HTTP URL, vulnerable to network interception (Man-in-the-Middle)."
+        fix: "Update the form action attribute to point strictly to an https:// URL."
+    mixed_content:
+        why: "The page is served over HTTPS but loads unencrypted HTTP scripts, styles, or iframes. An attacker on the network can alter these to inject arbitrary code."
+        fix: "Update resource URLs to use https:// or protocol-relative paths."
+    csp_missing:
+        why: "Without a Content-Security-Policy, the browser cannot restrict untrusted script sources, significantly increasing the risk of XSS attacks."
+        fix: "Add the Content-Security-Policy header in your web server configuration."
+    hsts_missing:
+        why: "Without HSTS, visitors might connect over plain HTTP on their first visit, allowing SSL stripping attacks."
+        fix: "Add Strict-Transport-Security: max-age=31536000; includeSubDomains; preload."
+    x_frame_missing:
+        why: "The site can be framed inside a malicious third-party site to trick users into unwanted clicks (Clickjacking)."
+        fix: "Add X-Frame-Options: SAMEORIGIN or use CSP frame-ancestors 'self'."
+    cookie_no_secure:
+        why: "Without the Secure flag, cookies can be transmitted over plain HTTP connections."
+        fix: "Ensure all cookies set Secure; HttpOnly; SameSite=Lax."
+    cookie_no_httponly:
+        why: "Without HttpOnly, JavaScript can access session cookies (document.cookie), enabling session theft via XSS."
+        fix: "Enable HttpOnly on all authentication and session cookies."
+    cookie_samesite_missing:
+        why: "SameSite controls whether cookies are sent with cross-site requests. Without it, the application is more susceptible to CSRF."
+        fix: "Set SameSite=Lax or SameSite=Strict on all cookies."
+    csp_unsafe_inline:
+        why: "'unsafe-inline' allows execution of inline scripts and styles, undermining XSS mitigations."
+        fix: "Move inline code to external bundles or use cryptographic nonces."
+    csp_unsafe_eval:
+        why: "'unsafe-eval' allows dynamic string execution via eval()."
+        fix: "Eliminate dynamic eval() calls in your frontend scripts."
+    csp_wildcard:
+        why: "Wildcard sources (*) allow scripts to be loaded from any domain."
+        fix: "Explicitly allow trusted domains instead of wildcards."
+    nosniff_missing:
+        why: "Without nosniff, browsers may attempt to guess file content types and execute script embedded in images or text."
+        fix: "Add X-Content-Type-Options: nosniff header."
+    tabnabbing:
+        why: "Opening a target='_blank' link without rel='noopener noreferrer' grants the target page access to window.opener."
+        fix: "Always include rel='noopener noreferrer' on target='_blank' links."
+    sourcemap_exposed:
+        why: "Sourcemaps (.js.map) allow anyone to download the full original source code, including comments and internal endpoints."
+        fix: "Disable production sourcemaps in your build tool."
+    hsts_short_max_age:
+        why: "The HSTS max-age duration is below the recommended 6 months."
+        fix: "Set max-age to at least 1 year (31536000 seconds)."
+    cors_wildcard:
+        why: "Access-Control-Allow-Origin: * combined with credentials allows unauthorized cross-origin data reads."
+        fix: "Validate origins strictly and never return wildcard with credentials."
+    referrer_policy_missing:
+        why: "Sensitive URLs may leak in the Referer header to external services."
+        fix: "Set Referrer-Policy: strict-origin-when-cross-origin."
+    permissions_policy_missing:
+        why: "Missing Permissions-Policy allows uncontrolled browser feature access."
+        fix: "Set Permissions-Policy header to restrict camera, microphone, and geolocation."
+    server_header_leak:
+        why: "Disclosing exact web server versions helps attackers target known CVEs."
+        fix: "Turn off server signature and tokens in Nginx or Apache."
+    form_no_csrf:
+        why: "POST form without a detected anti-CSRF token."
+        fix: "Add a unique, per-session anti-CSRF token to all mutation forms."
+    comment_leak:
+        why: "Public HTML comments disclose developer notes, private IPs, or credentials."
+        fix: "Strip comments during production builds."
+    http_error:
+        why: "The page returned an HTTP error (4xx or 5xx)."
+        fix: "Verify URL routes and server availability."
+    redirect:
+        why: "The page redirected to another URL."
+        fix: "Ensure redirect chains point to the final HTTPS destination."
+    blocked:
+        why: "URL is excluded by robots.txt."
+        fix: "No action required if intentional."
+
+js:
+    stop: "Stop"
+    pause: "Pause"
+    resume: "Resume"
+    search: "Filter pages or search flaws..."
+    filter:
+        all: "All pages"
+        critical: "Pages with critical flaws"
+        high: "Pages with high flaws"
+        medium: "Pages with medium flaws"
+        low: "Pages with low flaws"
+        headers: "Header flaws"
+        cookies: "Cookie flaws"
+        secrets: "Exposed secrets & tokens"
+        dom: "DOM & Form flaws"
+        clean: "Pages without flaws"
+    columns:
+        url: "Page"
+        status: "Status"
+        depth: "Depth"
+        score: "Score"
+        headers: "Headers"
+        cookies: "Cookies"
+        secrets: "Secrets"
+        issues: "Vulnerabilities"
+    severity:
+        critical: "Critical"
+        high: "High"
+        medium: "Medium"
+        low: "Low"
+        info: "Info"
+    status:
+        running: "Auditing page %analysed% of %total%..."
+        done: "Audit complete: %total% pages analyzed."
+        paused: "Audit paused."
+        stopped: "Audit stopped."
+        throttled: "Throttling pause (%s% s)..."
+        limit: "limit reached"
+    score:
+        grade_a: "Excellent security posture"
+        grade_b: "Good overall security"
+        grade_c: "Average security — fixes recommended"
+        grade_d: "Fragile posture — vulnerabilities found"
+        grade_f: "Critical security — urgent action required"
+    drawer:
+        present: "Present"
+        absent: "Missing"
+        hidden: "Hidden"
+        server: "Server"
+        headers_title: "Security headers"
+        dom_title: "Cookies and content"
+        cookies: "Cookies"
+        secrets: "Exposed secrets"
+        mixed: "Mixed content"
+        tabnabbing: "Links without noopener"
+        yes: "yes"
+        no: "no"
+        cookie: "%name% · Secure: %secure% · HttpOnly: %httponly% · SameSite: %samesite%"
+        form: "%method% %action% · password: %password% · CSRF token: %csrf%"
+        status: "HTTP Status"
+        score: "Page score"
+        depth: "Depth"
+        issues_title: "Detected vulnerabilities & findings (%count%)"
+        no_issues: "No flaws detected on this page!"
+        why_title: "Why it matters"
+        fix_title: "How to fix"
+        headers_received: "HTTP headers received (%count%)"
+        cookies_received: "Cookies detected (%count%)"
+        secrets_title: "Secrets and tokens discovered (%count%)"
+        sourcemaps_title: "Exposed sourcemaps (%count%)"
+        forms_title: "Forms inspected (%count%)"
+        tabnabbing_title: "External links without noopener (%count%)"
+        mixed_title: "Unencrypted mixed content (%count%)"
+    error:
+        robots: "Blocked by robots.txt"
+        network: "Unreachable"
+        too_large: "Page too large"
+    cell:
+        headers: "%count% of 4 essential headers"
+        cookies: "%insecure% cookie(s) without Secure or HttpOnly out of %count%"
+        cookies_alert: "%count% to fix"
+        secrets: "%count% secret(s) found"
+    synth:
+        score: "Security score"
+        pages: "Pages audited"
+        critical: "Critical pages"
+        high: "High-risk pages"
+        top: "Flaws to fix first"
+        show_all: "Show all"
+        none: "No flaw found on the site."
+        share: "%count% p. (%percent%%)"
