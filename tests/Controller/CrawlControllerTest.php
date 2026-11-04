@@ -31,9 +31,9 @@ final class CrawlControllerTest extends WebTestCase
         self::assertSelectorTextContains('section[aria-labelledby="foundations-title"]', 'OWASP Top 10');
         self::assertSelectorTextContains('section[aria-labelledby="technologies-title"]', 'Symfony');
         self::assertSelectorExists('.foundation-card[href="https://www.w3.org/TR/CSP3/"]');
-        self::assertSame(7, $this->client->getCrawler()->filter('.home-sources.is-tech .sources-list li')->count());
+        self::assertSame(9, $this->client->getCrawler()->filter('.home-sources.is-tech .sources-list li')->count());
         self::assertSame(3, $this->client->getCrawler()->filter('.home-sources.is-tech svg.source-logo')->count());
-        self::assertSame(4, $this->client->getCrawler()->filter('.home-sources.is-tech .source-mark')->count());
+        self::assertSame(6, $this->client->getCrawler()->filter('.home-sources.is-tech .source-mark')->count());
         self::assertSelectorExists('.home-discord-button[href="https://discord.gg/cdD8C6hjWu"]');
         self::assertSelectorTextContains('.home-discord', 'Rejoignez Net Labs sur Discord');
         self::assertSelectorExists('form.crawl-form input[name="url"]');

@@ -849,6 +849,8 @@ a.foundation-card:hover {
 .sources-list li.is-php { --brand: #777bb4; }
 .sources-list li.is-twig { --brand: #8daa2b; }
 .sources-list li.is-phpunit { --brand: #3c9cd7; }
+.sources-list li.is-githubactions { --brand: #2088ff; }
+.sources-list li.is-docker { --brand: #2496ed; }
 
 .source-logo {
     width: 20px;

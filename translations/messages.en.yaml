@@ -201,6 +201,10 @@ home:
                 name: "JavaScript"
             phpunit:
                 name: "PHPUnit"
+            githubactions:
+                name: "GitHub Actions"
+            docker:
+                name: "Docker"
             phpstan:
                 name: "PHPStan"
             ovhcloud:

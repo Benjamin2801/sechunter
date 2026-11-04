@@ -127,7 +127,7 @@
     <section class="home-sources is-tech" aria-labelledby="technologies-title">
         <h2 id="technologies-title" class="home-kicker">{{ 'home.technologies.heading'|trans }}</h2>
         <ul class="sources-list">
-            {% for technology, mark in {ovhcloud: 'OVH', php: 'PHP', symfony: 'SF', twig: 'T', javascript: 'JS', phpunit: 'P', phpstan: 'P'} %}
+            {% for technology, mark in {ovhcloud: 'OVH', php: 'PHP', symfony: 'SF', twig: 'T', javascript: 'JS', phpunit: 'P', phpstan: 'P', githubactions: 'GA', docker: 'D'} %}
                 <li class="is-{{ technology }}">
                     {{ include('home/_technology_icon.svg.twig', {technology: technology, mark: mark}) }}
                     {{ ('home.technologies.items.' ~ technology ~ '.name')|trans }}
