@@ -26,7 +26,7 @@ legal:
         contact: "Contact:"
     host:
         heading: "Host"
-        text: "OVH SAS<br>2 rue Kellermann, 59100 Roubaix, France<br>ovhcloud.com"
+        text: "IKOULA NET<br>2 Cité Paradis, 75010 Paris, France<br>+33 1 84 01 02 50<br>ikoula.com"
     data:
         heading: "Personal Data"
         no_account: "SecHunter does not require an account in V1."
@@ -207,8 +207,6 @@ home:
                 name: "Docker"
             phpstan:
                 name: "PHPStan"
-            ovhcloud:
-                name: "OVHcloud"
     inside:
         kicker: "Under the hood"
         title: "A passive audit, honest about what it sees"

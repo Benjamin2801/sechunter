@@ -20,7 +20,7 @@ use Symfony\Component\Translation\TranslatorBagInterface;
 use function Symfony\Component\String\u;
 
 // Le crawl de sécurité est piloté par le navigateur : il gère la file des pages et demande des lots de pages
-// analysées en moins de 30 s. Aucune requête ne dépasse le timeout du mutualisé.
+// analysées en moins de 30 s. Aucune requête ne dépasse le délai du serveur.
 final class CrawlController extends AbstractController
 {
     private const BATCH_SECONDS = 30;
