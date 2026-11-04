@@ -46,7 +46,7 @@ downloaded.
 
 ## Stack
 
-- Symfony 7.4 LTS, PHP 8.2 — no database, no front-end build (hand-written CSS and JavaScript)
+- Symfony 7.4 LTS, PHP 8.4 — no database, no front-end build (hand-written CSS and JavaScript)
 - Symfony HttpClient (curl, parallel requests) and PHP's DOM
 
 ## Quality
